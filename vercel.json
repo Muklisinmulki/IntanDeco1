@@ -1,20 +1,27 @@
 {
   "version": 2,
-  "framework": null,
-  "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.7.1"
+  "builds": [
+    {
+      "src": "api/index.php",
+      "use": "@vercel/php@0.8.0",
+      "config": {
+        "phpIni": {
+          "extension": "curl",
+          "disable_functions": "",
+          "memory_limit": "256M"
+        }
+      }
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
-  },
+  ],
   "routes": [
     { "src": "/(css|js|build|images|fonts)/(.*)", "dest": "public/$1/$2" },
     { "src": "/(.*)\\.(.+)", "dest": "public/$1.$2" },
     { "src": "/(.*)", "dest": "api/index.php" }
   ],
-  "builds": [
-        { "src": "api/index.php", "use": "vercel-php@0.7.1" },
-        { "src": "public/**", "use": "@vercel/static" }
-      ],
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
@@ -28,7 +35,6 @@
     "CACHE_DRIVER": "array",
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "cookie",
-    "SSR_TEMP_PATH": "/tmp/ssr",
-    "NODE_PATH": "node"
+    "SSR_TEMP_PATH": "/tmp/ssr"
   }
 }
