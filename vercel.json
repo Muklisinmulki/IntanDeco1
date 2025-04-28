@@ -7,10 +7,14 @@
     }
   },
   "routes": [
-    { "src": "/(css|js|images|fonts|build)/(.*)", "dest": "/public/$1/$2" },
-    { "src": "/(favicon\\.ico|robots\\.txt|sitemap\\.xml)", "dest": "/public/$1" },
-    { "src": "/(.*)", "dest": "/api/index.php" }
+    { "src": "/(css|js|build|images|fonts)/(.*)", "dest": "public/$1/$2" },
+    { "src": "/(.*)\\.(.+)", "dest": "public/$1.$2" },
+    { "src": "/(.*)", "dest": "api/index.php" }
   ],
+  "builds": [
+        { "src": "api/index.php", "use": "vercel-php@0.7.1" },
+        { "src": "public/**", "use": "@vercel/static" }
+      ],
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
